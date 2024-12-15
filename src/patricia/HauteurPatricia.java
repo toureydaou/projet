@@ -35,7 +35,7 @@ public class HauteurPatricia {
             writer.close();
 
             System.out
-                    .println("Profondeur hauteur l'arbre sauvegardée dans le fichier "
+                    .println("Hauteur de l'arbre sauvegardée dans le fichier "
                             + fichierHauteur.getPath());
         } catch (Exception e) {
             e.printStackTrace();
