@@ -14,22 +14,64 @@ import java.util.stream.Collectors;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import patricia.ComptageMotsPatricia;
+import patricia.ComptageNilPatricia;
+import patricia.HauteurPatricia;
+import patricia.InsererPatricia;
+import patricia.ListeMotsPatricia;
+import patricia.PrefixePatricia;
+import patricia.ProfondeurMoyennePatricia;
+import patricia.SupprimerPatricia;
+
 public class Main {
     public static void main(String[] args) {
 
-        Patricia patricia_vide = new Patricia();
+        if (args.length > 1) {
+            String fichier = args[1];
+            switch (args[0]) {
+                case "inserer":
+                    InsererPatricia.insertion(fichier);
+                    break;
+                case "suppression":
+                    SupprimerPatricia.suppression(fichier);
+                    break;
+                case "listeMots":
+                    ListeMotsPatricia.listeMots(fichier);
+                    break;
+                case "profondeurMoyenne":
+                    ProfondeurMoyennePatricia.profondeurMoyenne(fichier);
+                    break;
+                case "prefixe":
+                    String prefixe = args[2];
+                    PrefixePatricia.prefixe(fichier, prefixe);
+                    break;
+                case "hauteur":
+                    HauteurPatricia.hauteur(fichier);
+                    break;
+                case "comptageNil":
+                    ComptageNilPatricia.comptageNil(fichier);
+                    break;
+                case "comptageMots":
+                    ComptageMotsPatricia.comptageMots(fichier);
+                    break;
+                default:
+                    break;
+            }
+        }
 
-        patricia_vide.setPrefixe("");
-        patricia_vide.setFinDeMot(null);
+        // Patricia patricia_vide = new Patricia();
+
+        // patricia_vide.setPrefixe("");
+        // patricia_vide.setFinDeMot(null);
 
         // TreeMap<String, Patricia> noeud_vide = new TreeMap<String, Patricia>();
 
         // Patricia.insertWord(patricia_vide, "carte");
         // Patricia.insertWord(patricia_vide, "carti");
-        Patricia.insertWord(patricia_vide, "cart");
-        Patricia.insertWord(patricia_vide, "car");
+        // Patricia.insertWord(patricia_vide, "cart");
+        // Patricia.insertWord(patricia_vide, "car");
         // Patricia.insertWord(patricia_vide, "cai");
-        Patricia.insertWord(patricia_vide, "dog");
+        // Patricia.insertWord(patricia_vide, "dog");
         // Patricia.insertWord(patricia_vide, "bat");
         // Patricia.insertWord(patricia_vide, "ca");
 
@@ -38,12 +80,12 @@ public class Main {
 
         // System.out.println("---------------");
 
-        Gson gson = new GsonBuilder().registerTypeAdapter(Patricia.class, new PatricaJsonDeserializer())
-                .create();
+        // Gson gson = new GsonBuilder().registerTypeAdapter(Patricia.class, new
+        // PatricaJsonDeserializer()).create();
 
-        Patricia testArbre = gson.fromJson(patricia_vide.toString(), Patricia.class);
+        // Patricia testArbre = gson.fromJson(patricia_vide.toString(), Patricia.class);
 
-        System.out.println(testArbre.toString());
+        // System.out.println(testArbre.toString());
         // System.out.println(Patricia.supprimer(patricia_vide, "carti"));
         // System.out.println(Patricia.supprimer(patricia_vide, "caru"));
         // System.out.println(Patricia.supprimer(patricia_vide, "ca"));
