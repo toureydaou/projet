@@ -3,7 +3,7 @@
 
 # Vérifie si deux arguments sont fournis
 if [ "$#" -ne 3 ]; then 
-    echo "Renseignez deux arguments";
+    echo "Renseignez trois arguments";
     exit 1;
 fi 
 
