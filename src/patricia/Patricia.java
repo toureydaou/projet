@@ -1,18 +1,12 @@
+package patricia;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.TreeMap;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.reflect.TypeToken;
 
-class Patricia  {
+class Patricia {
     @SerializedName("children")
     public TreeMap<String, Patricia> noeud = new TreeMap<String, Patricia>();
     @SerializedName("label")
@@ -62,17 +56,6 @@ class Patricia  {
     public void setFinDeMot(String finDeMot) {
         this.finDeMot = finDeMot;
     }
-
-    public String toString2() {
-        GsonBuilder builder = new GsonBuilder();
-        builder.setPrettyPrinting();
-
-        Gson gson = builder.create();
-
-        return gson.toJson(this);
-
-    }
-
 
     @Override
     public String toString() {
@@ -331,12 +314,12 @@ class Patricia  {
     // fonction permettant de compter les pointeurs nuls dans l'arbre
     public static int comptageNil(Patricia arbre) {
         /*
-         * si la racine ne contient pas d'enfant donc il y'a 128 pointeurs vides
+         * si la racine ne contient pas d'enfant donc il y'a 127 pointeurs vides
          * (un arbre vide à tous ses pointeurs à Nil)
          */
 
         if (arbre.getPrefixe().equals("") && arbre.getNoeud().size() == 0) {
-            return 128;
+            return 127;
         }
 
         // dans le cas où la racine n'est pas vide
@@ -346,7 +329,7 @@ class Patricia  {
         } else {
             // le nombre de pointeurs vides est égal à 127 moins le nombre de clés
             // dans le noeud
-            nbreNil += 128 - arbre.getNoeud().size();
+            nbreNil += 127 - arbre.getNoeud().size();
         }
 
         // on parcours les sous noeuds de l'arbres pour compter leurs pointeurs vides
@@ -468,7 +451,6 @@ class Patricia  {
     /*
      * fonction permettant de supprimer un mot dans un arbre
      */
-
     public static Patricia supprimer(Patricia arbre, String mot) {
 
         // si le mot n'existe pas ou le mot est une chaine de caractère vide
