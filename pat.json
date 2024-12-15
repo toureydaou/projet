@@ -8,13 +8,24 @@
       "children": {}
     },
     "c": {
-      "label": "ca",
+      "label": "c",
       "is_end_of_word": false,
       "children": {
-        "r": {
-          "label": "r",
+        "a": {
+          "label": "a",
           "is_end_of_word": true,
           "children": {
+            "r": {
+              "label": "r",
+              "is_end_of_word": true,
+              "children": {
+                "t": {
+                  "label": "t",
+                  "is_end_of_word": true,
+                  "children": {}
+                }
+              }
+            },
             "t": {
               "label": "t",
               "is_end_of_word": true,
@@ -22,10 +33,22 @@
             }
           }
         },
-        "t": {
-          "label": "t",
+        "i": {
+          "label": "i",
           "is_end_of_word": true,
-          "children": {}
+          "children": {
+            "r": {
+              "label": "r",
+              "is_end_of_word": true,
+              "children": {
+                "t": {
+                  "label": "t",
+                  "is_end_of_word": true,
+                  "children": {}
+                }
+              }
+            }
+          }
         }
       }
     },
