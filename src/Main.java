@@ -16,6 +16,7 @@ import com.google.gson.GsonBuilder;
 
 import patricia.ComptageMotsPatricia;
 import patricia.ComptageNilPatricia;
+import patricia.FusionPatricia;
 import patricia.HauteurPatricia;
 import patricia.InsererPatricia;
 import patricia.ListeMotsPatricia;
@@ -54,12 +55,15 @@ public class Main {
                 case "comptageMots":
                     ComptageMotsPatricia.comptageMots(fichier);
                     break;
+                case "fusion":
+                    String fichierArbre2 = args[2];
+                    FusionPatricia.fusion(fichier, fichierArbre2);
+                    break;
                 default:
                     break;
             }
         }
 
-       
     }
 
 }
