@@ -14,5 +14,5 @@ y=$2
 
 if [ "$x" -eq 0 ]; then
     echo "Insertion dans l'arbre patricia";
-    java -classpath classes:lib/gson-2.11.0.jar Main inserer  "$y"
+    java -classpath classes:lib/gson-2.11.0.jar Main inserer "$y"
 fi
