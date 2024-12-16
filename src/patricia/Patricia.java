@@ -1,9 +1,6 @@
 package patricia;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.TreeMap;
 import com.google.gson.annotations.SerializedName;
 
@@ -14,6 +11,15 @@ class Patricia {
     public String prefixe;
     @SerializedName("is_end_of_word")
     public String finDeMot = "";
+
+    public static int complexRecherche = 0;
+    public static int complexComptageMots = 0;
+    public static int complexeComptageNil = 0;
+    public static int complexeHauteur = 0;
+    public static int complexeProfondeurMoyenne = 0;
+    public static int complexePerfixe = 0;
+    public static int complexeSuppresion = 0;
+    public static int complexeAppel = 0;
 
     public Patricia() {
 
@@ -200,12 +206,14 @@ class Patricia {
          */
         //
         if (arbre.getPrefixeByKey(debut_mot) != null) {
+            complexRecherche++;
             String prefixe = arbre.getPrefixeByKey(debut_mot);
             // ici on vérifie si le préfixe est préfixe de notre mot
             if (mot.startsWith(prefixe) && mot.equals(prefixe)) {
                 // si le mot est égal au préfixe alors on s'assure qu'il s'agit d'une fin de mot
                 // si ce n'est pas le cas il s'agit d'un simple prefixe
                 if (arbre.getNoeud().get(debut_mot).isEndOfWord()) {
+                    System.out.println(complexRecherche);
                     return true;
                 } else {
                     return false;
@@ -222,7 +230,7 @@ class Patricia {
                 return Patricia.recherche(arbre.getNoeud().get(debut_mot), mot.substring(prefixe.length()));
             }
         }
-
+        System.out.println(complexRecherche);
         return false;
 
     }
@@ -252,6 +260,7 @@ class Patricia {
              * si on rencontre une fin de noeud on incrémente le nombre
              * de noeuds de 1
              */
+            complexComptageMots++;
             if (patricia.isEndOfWord()) {
                 nbreMots++;
             }
@@ -260,6 +269,7 @@ class Patricia {
              */
             nbreMots += Patricia.comptageMots(patricia);
         }
+        System.out.println("complexComptageMots : " + complexComptageMots);
         return nbreMots;
 
     }
@@ -320,16 +330,19 @@ class Patricia {
          */
 
         if (arbre.getPrefixe().equals("") && arbre.getNoeud().size() == 0) {
+            complexeComptageNil++;
             return 127;
         }
 
         // dans le cas où la racine n'est pas vide
         int nbreNil = 0;
         if (arbre.getNoeud().size() == 0) {
+            complexeComptageNil++;
             return 0;
         } else {
             // le nombre de pointeurs vides est égal à 127 moins le nombre de clés
             // dans le noeud
+            complexeComptageNil++;
             nbreNil += 127 - arbre.getNoeud().size();
         }
 
@@ -338,6 +351,7 @@ class Patricia {
             nbreNil += Patricia.comptageNil(patricia);
 
         }
+        System.out.println("complexeComptageNil : " + complexeComptageNil);
         return nbreNil;
     }
 
@@ -348,6 +362,7 @@ class Patricia {
     public static int profondeurNoeud(Patricia arbre, int profondeurCourante) {
 
         // si on atteint une feuille on retourne la profondeur trouvée
+        complexeHauteur++;
         if (arbre.getNoeud().size() == 0) {
             return profondeurCourante;
         }
@@ -363,10 +378,11 @@ class Patricia {
             // si on récupère une profondeur d'une feuille on la compare
             // avec la hauteur précédent récupérée le maximun correspond
             // à la hauteur de l'arbre
+            complexeHauteur++;
             hauteur = Math.max(profondeurNoeudCourant, hauteur);
 
         }
-
+        System.out.println("complexeHauteur " + complexeHauteur);
         return hauteur;
     }
 
@@ -380,6 +396,7 @@ class Patricia {
 
         // si on atteint une feuille on retourne la profondeur trouvée
         if (arbre.getNoeud().size() == 0) {
+            complexeProfondeurMoyenne++;
             profondeurs.add(profondeurCourante);
             // on ajoute la profondeur trouvée à l'ensemble des profondeur et on quitte
             return;
@@ -403,6 +420,7 @@ class Patricia {
         for (Integer profondeur : profondeurs) {
             sommeProfondeurs += profondeur;
         }
+        System.out.println("complexeProfondeurMoyenne " + complexeProfondeurMoyenne);
         return sommeProfondeurs / profondeurs.size();
     }
 
@@ -418,18 +436,21 @@ class Patricia {
 
         // si l'arbre n'est pas vide donc on descend dans les enfants
         // on vérifie si le première lettre de la chaîne contient une valeur
+
         if (arbre.getNoeud().get(prefixe.substring(0, 1)) != null) {
             String prefixeArbre = arbre.getPrefixeByKey(prefixe.substring(0, 1));
 
             // si la longueur du préfixe de l'arbre courant est
             // supérieure à la chaine passée en entrée
             // exemple : prefixeArbre : cat, prefixe (chaîne) : ca
+            complexePerfixe++;
             if (prefixeArbre.length() >= prefixe.length() && prefixeArbre.startsWith(prefixe)) {
                 // on crée un arbre vide
                 Patricia patricia = new Patricia();
                 // on insère alors l'arbre associé au préfixe comme sous arbre de l'arbre vide
                 patricia.getNoeud().put(prefixe.substring(0, 1), arbre.getNoeud().get(prefixe.substring(0, 1)));
                 // compte maintenant le nombre de mots dans l'arbre
+                System.out.println("complexePerfixe : " + complexePerfixe);
                 return Patricia.comptageMots(patricia);
             }
 
@@ -491,6 +512,7 @@ class Patricia {
 
         // si le mot n'est pas directement présent dans le sous-arbre de l'arbre courant
         // alors on descend dans le sous arbre pour continuer la recherche
+        complexeSuppresion++;
         if (arbre.getNoeud().containsKey(debut_mot)) {
             // on réalise une suppression récursive dans le sous-arbre
             // avec le reste du mot soustrait du préfixe
@@ -506,9 +528,11 @@ class Patricia {
             }
         }
 
+        System.out.println("complexeSuppresion " + complexeSuppresion);
         return arbre;
     }
 
+    // fonction permettant de fusionner deux arbre patricia
     public static Patricia fusion(Patricia patricia_1, Patricia patricia_2) {
 
         // si le premier arbre est vide on retourne le second

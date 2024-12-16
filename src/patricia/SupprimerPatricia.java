@@ -26,11 +26,16 @@ public class SupprimerPatricia {
 
             BufferedReader reader = new BufferedReader(new FileReader(new File(cheminFichier)));
             String mot = reader.readLine();
+            long tempsTotal = 0;
             while (mot != null) {
+                long start = System.nanoTime();
                 Patricia.supprimer(arbrePatricia, mot);
+                long fin = System.nanoTime();
+                tempsTotal += fin - start;
                 mot = reader.readLine();
             }
             reader.close();
+            System.out.println("Temps suppression : " + tempsTotal + "nanosecondes");
 
             // écriture dans le fichier pat.json
 

@@ -3,7 +3,6 @@ package patricia;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.nio.Buffer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -22,6 +21,7 @@ public class ListeMotsPatricia {
             Patricia arbrePatricia = gson.fromJson(patriciaJson, Patricia.class);
 
             // récupération de la liste des mots de l'arbre patricia
+            
             ArrayList<String> mots = Patricia.listeMots(arbrePatricia);
 
             // écriture des mots dans le fichier mot.txt

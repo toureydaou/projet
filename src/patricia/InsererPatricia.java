@@ -7,19 +7,39 @@ import java.io.FileReader;
 import java.io.FileWriter;
 
 public class InsererPatricia {
-    public static void insertion(String cheminFichier) {
-        File fichier = new File(cheminFichier);
+    public static void insertion(String cheminFichierOuDossier) {
+        File fileOrDirectory = new File(cheminFichierOuDossier);
         Patricia racine = new Patricia("", "");
 
-        // lecture des mots du fichier et insertion dans l'arbre patricia
+        // insere les mots dans l'arbre patricia depuis un dossier ou un fichier
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(fichier));
-            String mot = reader.readLine();
-            while (mot != null) {
-                Patricia.insertWord(racine, mot);
-                mot = reader.readLine();
+
+            if (fileOrDirectory.isFile()) {
+                BufferedReader reader = new BufferedReader(new FileReader(cheminFichierOuDossier));
+                String mot = reader.readLine();
+                while (mot != null) {
+                    Patricia.insertWord(racine, mot);
+                    mot = reader.readLine();
+                }
+                reader.close();
+            } else {
+                String mot;
+                long tempsTotal = 0;
+                for (File fichier : fileOrDirectory.listFiles()) {
+                    BufferedReader reader = new BufferedReader(new FileReader(fichier));
+                    mot = reader.readLine();
+                    while (mot != null) {
+                        long start = System.currentTimeMillis();
+                        Patricia.insertWord(racine, mot);
+                        long fin = System.currentTimeMillis();
+                        mot = reader.readLine();
+                        tempsTotal += fin - start;
+                    }
+                    reader.close();
+                }
+                System.out.println("Temps d'execution : " + tempsTotal);
             }
-            reader.close();
+
         } catch (Exception e) {
             e.printStackTrace();
         }

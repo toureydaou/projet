@@ -16,9 +16,10 @@ public class HauteurPatricia {
             Gson gson = new GsonBuilder().registerTypeAdapter(Patricia.class, new PatricaJsonDeserializer()).create();
             String patriciaJson = new String(Files.readAllBytes(Paths.get(file)));
             Patricia arbrePatricia = gson.fromJson(patriciaJson, Patricia.class);
-
+            long start = System.nanoTime();
             int hauteur = Patricia.hauteur(arbrePatricia);
-
+            long fin = System.nanoTime();
+            System.out.println("Temps de calcul de la hauteur " + (fin - start));
             // écriture de la hauteur dans le fichier hauteur.txt
             File fichierHauteur = new File("hauteur.txt");
             if (fichierHauteur.exists()) {

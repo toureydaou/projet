@@ -1,27 +1,13 @@
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.stream.Collectors;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import patricia.ComptageMotsPatricia;
 import patricia.ComptageNilPatricia;
 import patricia.FusionPatricia;
 import patricia.HauteurPatricia;
 import patricia.InsererPatricia;
+import patricia.InsertInPatriciaFromFile;
 import patricia.ListeMotsPatricia;
 import patricia.PrefixePatricia;
 import patricia.ProfondeurMoyennePatricia;
+import patricia.RechercheMotPatricia;
 import patricia.SupprimerPatricia;
 
 public class Main {
@@ -32,6 +18,9 @@ public class Main {
             switch (args[0]) {
                 case "inserer":
                     InsererPatricia.insertion(fichier);
+                    break;
+                case "insererFichier":
+                    InsertInPatriciaFromFile.insertInPatriciaFromFile(fichier);
                     break;
                 case "suppression":
                     SupprimerPatricia.suppression(fichier);
@@ -45,6 +34,10 @@ public class Main {
                 case "prefixe":
                     String prefixe = args[2];
                     PrefixePatricia.prefixe(fichier, prefixe);
+                    break;
+                case "recherche":
+                    String mot = args[2];
+                    RechercheMotPatricia.recherche(fichier, mot);
                     break;
                 case "hauteur":
                     HauteurPatricia.hauteur(fichier);

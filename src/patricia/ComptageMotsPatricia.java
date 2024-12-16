@@ -17,7 +17,10 @@ public class ComptageMotsPatricia {
             String patriciaJson = new String(Files.readAllBytes(Paths.get(file)));
             Patricia arbrePatricia = gson.fromJson(patriciaJson, Patricia.class);
 
+            long start = System.nanoTime();
             int nombreMots = Patricia.comptageMots(arbrePatricia);
+            long fin = System.nanoTime();
+            System.out.println("Temps de comptage des mots : " + (fin - start));
 
             // écriture de la hauteur dans le fichier nombreNil.txt
             File fichierNombreMots = new File("nombreMots.txt");
