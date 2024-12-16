@@ -1,0 +1,105 @@
+3-7°/ 
+1er cas :
+    si arbre1 vide on retourne arbre2 vice-versa
+2eme cas :
+    les arbres ne sont pas vides, alors on parcourt l'alphabet
+    
+    2-1 eme cas :
+        si la clée existe dans arbre2 mais pas dans arbre1 on rajoute le sous arbre associé à la clée dans l'arbre 1
+    2-2 eme cas :
+        la cle existe dans les deux arbres
+        2-2-1 eme cas :
+            si les deux préfixes des clées des arbres sont pareils
+            on continue la fusion avec leur sous arbres respectifs dont on affectera le résultat à la clé de l'arbre 1
+        2-2-2 eme cas :
+            si les deux préfixes sont partiellement commun
+            on remplace le préfixe de la clé de l'arbre 1 par le préfixe commun
+            on ajoute la première lettre du reste de l'ancien prefixe de l'arbre1 comme clée avec comme sous arbre l'ancien sous arbre de la clée de l'arbre 1 et comme label le reste du préfixe - prefixe commun
+            on fait de même pour l'arbre 2
+    
+
+4-9°/ Complexités
+
+Recherche : O(n) n étant la longueur du mot, ici la complexité se calcule en nombre de fois que l'on fait la recherche dans chaque table de hachage pour chaque lettre du mot la recherche se fait en O(1)
+
+ComptageMots : O(N) N étant le nombre de noeuds dans l'arbre, ici la complexité se fait en nombre de comparaison avec le caractère de fin de mot sur chaque noeud
+
+ListeMots : O(N) N étant le nombre de noeuds dans l'arbre, ici la complexité se fait en nombre de comparaison avec le caractère de fn de mot sur chaque noeud
+
+ComptageNil :O(n) n étant le nombre de noeuds ici la complexité s'évalue en nombre de comparaison de la taille du noeud avec 0
+
+Hauteur : O(2n) n étant le nombre de noeuds (dans cas l'arbre et totalement déséquilibré il est linéaire) la complexité se calcule avec le nombre de comparaison dans le noeud ici on en fait deux avec la hauteur et la profondeur courant et le nombre de sous arbres du noeud
+
+ProfondeurMoyenne : O(n) n étant le nombre de feuilles de l'arbre 
+ici la complexité s'évalue en nombre d'addition des profondeurs des feuilles
+
+Prefixe : O(m) m est la longueur du préfixe 
+
+
+Suppression : O(n), où n est la longueur du mot à supprimer la mesure de la complexité est la recherche dans chaque mot
+
+
+6-11°/
+- temps de construction patricia : 640ms
+
+- temps ajout d'un mot (français) dans la structure:
+ 
+aminométhylpyrimidinylhydroxyéthylméthylthiazolium : 52764 nanosecondes
+
+- temps ajout d'un mot (anglais) dans la structure
+pneumonoultramicroscopicsilicovolcanoconiosis : 49839 nanosecondes
+
+- temps de suppresion des mots de l'oeuvre (1henryiv.txt) dans l'intégrale des oeuvres : 114340016 nanosecondes
+
+
+- temps de calcul de la hauteur (intégrale des oeuvres : 7822311 nanosecondes
+
+- temps de comptage des mots de l'oeuvre de shakespeare : 8575174 nanosecondes
+
+- temps de recherche du mot considerations dans l'oeuvre de shakespeare : 79311 nanosecondes
+
+
+6-12°/
+
+Recherche (O(n)) : test avec le mot considerations 
+on effectue 10 recherches 
+
+ComptageMots (O(n)) : 28251 (nombre mots 23086)
+
+ListeMots (O(n)) : 28251 (nombre mots 23086)
+
+ComptageNil(O(n)) : 28252 (ici on part de la racine)
+
+Hauteur(O(2n)) : 56503 (ici on part de la racine) on donc 2n comparaison - 1 au niveau de la racine
+
+ProfondeurMoyenne (O(n)) : 16780 
+
+
+Prefixe(m) : 4 avec le préfixe "cons"
+
+Suppression (O(n)) : test avec le mot considerations on effectue 9 recherches
+
+
+6-13°/ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
