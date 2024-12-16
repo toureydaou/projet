@@ -9,3 +9,8 @@ compile:
 # commande permettant de supprimer les .class
 clean:
 	rm -r $(OUTPUT_DIR)
+
+run-test:
+	javac -sourcepath $(SOURCE_DIR) $(SOURCE_DIR)/Main.java -cp ./lib/junit-platform-console-standalone-1.11.3.jar:./lib/gson-2.11.0.jar -d $(OUTPUT_DIR)
+
+	java -jar ./lib/junit-platform-console-standalone-1.11.3.jar --class-path classes --scan-classpath
