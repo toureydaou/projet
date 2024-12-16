@@ -36,6 +36,10 @@ Pour pouvoir compiler le projet il suffit de lancer la commande :
 
   `./comptageNil.sh 0 arbre.json`
 
-- Commande de compter le nombre de mots ayant pour préfixe la chaîne spécifiée (Linux)
+- Commande permettant de compter le nombre de mots ayant pour préfixe la chaîne spécifiée (Linux)
 
   `./prefixe.sh 0 arbre.json prefixe`
+
+- Commande permettant de fusionner deux arbre patricia (Linux)
+
+  `./fusion.sh 0 arbre1.json arbre2.json`
