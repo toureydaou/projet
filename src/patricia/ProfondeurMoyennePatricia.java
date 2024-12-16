@@ -17,7 +17,7 @@ public class ProfondeurMoyennePatricia {
             String patriciaJson = new String(Files.readAllBytes(Paths.get(file)));
             Patricia arbrePatricia = gson.fromJson(patriciaJson, Patricia.class);
 
-            int nombreMots = Patricia.profondeurMoyenne(arbrePatricia);
+            double nombreMots = Patricia.profondeurMoyenne(arbrePatricia);
 
             // écriture des mots dans le fichier mot.txt
             File fichierProfondeur = new File("profondeur.txt");

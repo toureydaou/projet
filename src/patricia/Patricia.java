@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 import com.google.gson.annotations.SerializedName;
 
-class Patricia {
+public class Patricia {
     @SerializedName("children")
     public TreeMap<String, Patricia> noeud = new TreeMap<String, Patricia>();
     @SerializedName("label")
@@ -413,7 +413,7 @@ class Patricia {
     }
 
     // fonction calculant la profondeur moyenne des feuilles de l'arbre
-    public static int profondeurMoyenne(Patricia arbre) {
+    public static double profondeurMoyenne(Patricia arbre) {
         ArrayList<Integer> profondeurs = new ArrayList<>();
         Patricia.profondeurNoeuds(arbre, 0, profondeurs);
         int sommeProfondeurs = 0;
@@ -421,7 +421,7 @@ class Patricia {
             sommeProfondeurs += profondeur;
         }
         System.out.println("complexeProfondeurMoyenne " + complexeProfondeurMoyenne);
-        return sommeProfondeurs / profondeurs.size();
+        return (double) sommeProfondeurs / (double) profondeurs.size();
     }
 
     /*
@@ -546,54 +546,55 @@ class Patricia {
         }
 
         // on parcourt toute les clées du deuxième arbre
-        // for (String cle : patricia_2.getNoeud().keySet()) {
-        // // si la clée n'est pas présente dans l'arbre 1
-        // // on rajoute la clée dans l'arbre ainsi que le sous arbre associé
-        // if (!patricia_1.getNoeud().containsKey(cle)) {
-        // patricia_1.getNoeud().put(cle, patricia_2.getNoeud().get(cle));
-        // }
+        for (String cle : patricia_2.getNoeud().keySet()) {
+            // si la clée n'est pas présente dans l'arbre 1
+            // on rajoute la clée dans l'arbre ainsi que le sous arbre associé
+            if (!patricia_1.getNoeud().containsKey(cle)) {
+                patricia_1.getNoeud().put(cle, patricia_2.getNoeud().get(cle));
+            }
 
-        // // si la cle est contenue dans le premier arbre
-        // if (patricia_1.getNoeud().containsKey(cle)) {
-        // // on compare alors les préfixes
-        // String prefixeArbre1 = patricia_1.getNoeud().get(cle).getPrefixe();
-        // String prefixeArbre2 = patricia_2.getNoeud().get(cle).getPrefixe();
+            // si la cle est contenue dans le premier arbre
+            if (patricia_1.getNoeud().containsKey(cle)) {
+                // on compare alors les préfixes
+                String prefixeArbre1 = patricia_1.getNoeud().get(cle).getPrefixe();
+                String prefixeArbre2 = patricia_2.getNoeud().get(cle).getPrefixe();
 
-        // // si les deux on le même préfixe
-        // // on continue la fusion récursivement dans les sous arbres associés a la clé
-        // if (prefixeArbre1.equals(prefixeArbre2)) {
-        // patricia_1.getNoeud().put(cle,
-        // Patricia.fusion(patricia_1.getNoeud().get(cle),
-        // patricia_2.getNoeud().get(cle)));
-        // }
+                // si les deux on le même préfixe
+                // on continue la fusion récursivement dans les sous arbres associés a la clé
+                if (prefixeArbre1.equals(prefixeArbre2)) {
+                    patricia_1.getNoeud().put(cle,
+                            Patricia.fusion(patricia_1.getNoeud().get(cle),
+                                    patricia_2.getNoeud().get(cle)));
+                }
 
-        // // s'ils ont un préfixe commun
-        // String prefixeCommun = getCommonPrefixe(prefixeArbre1, prefixeArbre2);
-        // if (prefixeCommun.length() != prefixeArbre1.length()
-        // || prefixeCommun.length() != prefixeArbre2.length()) {
+                // s'ils ont un préfixe commun
+                String prefixeCommun = getCommonPrefixe(prefixeArbre1, prefixeArbre2);
+                if (prefixeCommun.length() != prefixeArbre1.length()
+                        || prefixeCommun.length() != prefixeArbre2.length()) {
 
-        // Patricia sousArbre1 = new Patricia(patricia_1.getNoeud().get(cle).getNoeud(),
-        // prefixeArbre1.substring(prefixeCommun.length()),
-        // "");
+                    String findeMot1 = patricia_1.getNoeud().get(cle).isEndOfWord() ? "@" : "";
+                    String findeMot2 = patricia_2.getNoeud().get(cle).isEndOfWord() ? "@" : "";
+                    Patricia sousArbre1 = new Patricia(patricia_1.getNoeud().get(cle).getNoeud(),
+                            prefixeArbre1.substring(prefixeCommun.length()), findeMot1);
 
-        // Patricia sousArbre2 = new Patricia(patricia_2.getNoeud().get(cle).getNoeud(),
-        // prefixeArbre2.substring(prefixeCommun.length()), "");
+                    Patricia sousArbre2 = new Patricia(patricia_2.getNoeud().get(cle).getNoeud(),
+                            prefixeArbre2.substring(prefixeCommun.length()), findeMot2);
 
-        // Patricia fusionSousArbre = Patricia.fusion(sousArbre1, sousArbre2);
+                    Patricia fusionSousArbre = Patricia.fusion(sousArbre1, sousArbre2);
 
-        // Patricia noeudCommun = new Patricia(prefixeCommun, "");
-        // noeudCommun.getNoeud().put(prefixeCommun.substring(0, 1), fusionSousArbre);
+                    Patricia noeudCommun = new Patricia(prefixeCommun, "");
+                    noeudCommun.getNoeud().put(prefixeCommun.substring(0, 1), fusionSousArbre);
 
-        // patricia_1.getNoeud().put(cle, noeudCommun);
-        // }
-        // }
-        // }
-
-        ArrayList<String> listeMotsArbre2 = Patricia.listeMots(patricia_2);
-
-        for (String mot : listeMotsArbre2) {
-            Patricia.insertWord(patricia_1, mot);
+                    patricia_1.getNoeud().put(cle, noeudCommun);
+                }
+            }
         }
+
+        // ArrayList<String> listeMotsArbre2 = Patricia.listeMots(patricia_2);
+
+        // for (String mot : listeMotsArbre2) {
+        // Patricia.insertWord(patricia_1, mot);
+        // }
 
         return patricia_1;
     }

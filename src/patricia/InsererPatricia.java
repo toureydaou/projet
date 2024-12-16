@@ -13,18 +13,23 @@ public class InsererPatricia {
 
         // insere les mots dans l'arbre patricia depuis un dossier ou un fichier
         try {
-
+            long tempsTotal = 0;
             if (fileOrDirectory.isFile()) {
                 BufferedReader reader = new BufferedReader(new FileReader(cheminFichierOuDossier));
                 String mot = reader.readLine();
                 while (mot != null) {
+
+                    long start = System.nanoTime();
                     Patricia.insertWord(racine, mot);
+                    mot = reader.readLine();
+                    long fin = System.nanoTime();
+                    tempsTotal += fin - start;
                     mot = reader.readLine();
                 }
                 reader.close();
             } else {
                 String mot;
-                long tempsTotal = 0;
+
                 for (File fichier : fileOrDirectory.listFiles()) {
                     BufferedReader reader = new BufferedReader(new FileReader(fichier));
                     mot = reader.readLine();
@@ -32,14 +37,14 @@ public class InsererPatricia {
                         long start = System.currentTimeMillis();
                         Patricia.insertWord(racine, mot);
                         long fin = System.currentTimeMillis();
-                        mot = reader.readLine();
                         tempsTotal += fin - start;
+                        mot = reader.readLine();
                     }
                     reader.close();
                 }
-                System.out.println("Temps d'execution : " + tempsTotal);
-            }
 
+            }
+            System.out.println("Temps d'execution : " + tempsTotal);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -9,6 +9,7 @@ import patricia.PrefixePatricia;
 import patricia.ProfondeurMoyennePatricia;
 import patricia.RechercheMotPatricia;
 import patricia.SupprimerPatricia;
+import patricia.FusionDossierPatricia;
 
 public class Main {
     public static void main(String[] args) {
@@ -51,6 +52,9 @@ public class Main {
                 case "fusion":
                     String fichierArbre2 = args[2];
                     FusionPatricia.fusion(fichier, fichierArbre2);
+                    break;
+                case "fusionDossier":
+                    FusionDossierPatricia.fusion(fichier);
                     break;
                 default:
                     break;

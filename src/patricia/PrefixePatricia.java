@@ -18,7 +18,10 @@ public class PrefixePatricia {
             Patricia arbrePatricia = gson.fromJson(patriciaJson, Patricia.class);
 
             // nombre de mot ayant pour préfixe le chaîne spécifiée
+            long start = System.nanoTime();
             int nombreMots = Patricia.prefixe(arbrePatricia, prefixe);
+            long fin = System.nanoTime();
+            System.out.println("Temps d'execution : " + (fin - start) + " nanosecondes");
 
             // écriture des mots dans le fichier mot.txt
             File fichierMots = new File("prefixe.txt");

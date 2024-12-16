@@ -23,7 +23,10 @@ public class FusionPatricia {
             patriciaJson2 = new String(Files.readAllBytes(Paths.get(file2)));
             Patricia arbrePatricia2 = gson.fromJson(patriciaJson2, Patricia.class);
 
+            long start = System.nanoTime();
             Patricia arbreFusion = Patricia.fusion(arbrePatricia1, arbrePatricia2);
+            long fin = System.nanoTime();
+            System.out.println("Temps d'execution de la fusion des arbre " + (fin - start) + "nanosecondes");
 
             // écriture dans le fichier pat.json
 
