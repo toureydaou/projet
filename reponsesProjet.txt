@@ -31,7 +31,7 @@ ComptageNil :O(n) n étant le nombre de noeuds ici la complexité s'évalue en n
 Hauteur : O(2n) n étant le nombre de noeuds (dans cas l'arbre et totalement déséquilibré il est linéaire) la complexité se calcule avec le nombre de comparaison dans le noeud ici on en fait deux avec la hauteur et la profondeur courant et le nombre de sous arbres du noeud
 
 ProfondeurMoyenne : O(n) n étant le nombre de feuilles de l'arbre 
-ici la complexité s'évalue en nombre d'addition des profondeurs des feuilles
+ici la complexité s'évalue en nombre de comparaison pour savoir si le noeud n'a pas d'enfants
 
 Prefixe : O(m) m est la longueur du préfixe 
 
@@ -40,7 +40,9 @@ Suppression : O(n), où n est la longueur du mot à supprimer la mesure de la co
 
 
 6-11°/
-- temps de construction patricia : 640ms
+- temps de construction patricia (toute oeuvre) : 640ms
+
+- temps de construction patricia (1henryvi.txt) : 27039587 nanosecondes
 
 - temps ajout d'un mot (français) dans la structure:
  
@@ -52,12 +54,13 @@ pneumonoultramicroscopicsilicovolcanoconiosis : 49839 nanosecondes
 - temps de suppresion des mots de l'oeuvre (1henryiv.txt) dans l'intégrale des oeuvres : 114340016 nanosecondes
 
 
-- temps de calcul de la hauteur (intégrale des oeuvres : 7822311 nanosecondes
+- temps de calcul de la hauteur (intégrale des oeuvres) : 7822311 nanosecondes
 
 - temps de comptage des mots de l'oeuvre de shakespeare : 8575174 nanosecondes
 
 - temps de recherche du mot considerations dans l'oeuvre de shakespeare : 79311 nanosecondes
 
+-temps de fusion de deux arbres (1henryvi.txt et 1henryiv.txt) : 12529065 nanosecondes
 
 6-12°/
 
@@ -84,7 +87,7 @@ Suppression (O(n)) : test avec le mot considerations on effectue 9 recherches
 
 
 
-
+814317236 nanosecondes
 
 
 
