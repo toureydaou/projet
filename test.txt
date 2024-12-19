@@ -1,5 +1,1 @@
-car
-cat
-cart
-dog
-bat
+the

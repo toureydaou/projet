@@ -30,7 +30,7 @@ public class ProfondeurMoyennePatricia {
 
             BufferedWriter writer = new BufferedWriter(new FileWriter(fichierProfondeur));
 
-            writer.write(nombreMots + "\n");
+            writer.write(nombreMots + "");
 
             writer.close();
 

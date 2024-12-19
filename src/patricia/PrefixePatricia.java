@@ -34,7 +34,7 @@ public class PrefixePatricia {
 
             // écriture dans le ficher
             BufferedWriter writer = new BufferedWriter(new FileWriter(fichierMots));
-            writer.write(nombreMots + "\n");
+            writer.write(nombreMots + "");
             writer.close();
             System.out.println("Nombre de mots dont " + prefixe + " est préfixe " + "sauvegardé dans le fichier "
                     + fichierMots.getPath());

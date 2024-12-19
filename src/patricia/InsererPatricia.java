@@ -24,7 +24,6 @@ public class InsererPatricia {
                     mot = reader.readLine();
                     long fin = System.nanoTime();
                     tempsTotal += fin - start;
-                    mot = reader.readLine();
                 }
                 reader.close();
             } else {

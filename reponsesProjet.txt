@@ -3,7 +3,7 @@
     si arbre1 vide on retourne arbre2 vice-versa
 2eme cas :
     les arbres ne sont pas vides, alors on parcourt l'alphabet
-    
+
     2-1 eme cas :
         si la clée existe dans arbre2 mais pas dans arbre1 on rajoute le sous arbre associé à la clée dans l'arbre 1
     2-2 eme cas :
@@ -16,7 +16,7 @@
             on remplace le préfixe de la clé de l'arbre 1 par le préfixe commun
             on ajoute la première lettre du reste de l'ancien prefixe de l'arbre1 comme clée avec comme sous arbre l'ancien sous arbre de la clée de l'arbre 1 et comme label le reste du préfixe - prefixe commun
             on fait de même pour l'arbre 2
-    
+
 
 4-9°/ Complexités
 
@@ -42,25 +42,84 @@ Suppression : O(n), où n est la longueur du mot à supprimer la mesure de la co
 6-11°/
 - temps de construction patricia (toute oeuvre) : 640ms
 
+- temps de construction trie (toute oeuvre) : 149ms
+
+
+
+
 - temps de construction patricia (1henryvi.txt) : 27039587 nanosecondes
+
+- temps de construction trie (1henryvi.txt) : 19157055 nanosecondes
+
+
+
+
 
 - temps ajout d'un mot (français) dans la structure:
  
-aminométhylpyrimidinylhydroxyéthylméthylthiazolium : 52764 nanosecondes
+aminométhylpyrimidinylhydroxyéthylméthylthiazolium : 52764 nanosecondes (patricia)
+
+
+- temps ajout d'un mot (français) dans la structure:
+ 
+aminométhylpyrimidinylhydroxyéthylméthylthiazolium : 11069567 nanosecondes (trie)
+
+
 
 - temps ajout d'un mot (anglais) dans la structure
-pneumonoultramicroscopicsilicovolcanoconiosis : 49839 nanosecondes
+pneumonoultramicroscopicsilicovolcanoconiosis : 49839 nanosecondes (patricia)
+
+- temps ajout d'un mot (anglais) dans la structure
+pneumonoultramicroscopicsilicovolcanoconiosis : 1108082 nanosecondes (trie)
+
+
+
+
 
 - temps de suppresion des mots de l'oeuvre (1henryiv.txt) dans l'intégrale des oeuvres : 114340016 nanosecondes
 
 
-- temps de calcul de la hauteur (intégrale des oeuvres) : 7822311 nanosecondes
 
-- temps de comptage des mots de l'oeuvre de shakespeare : 8575174 nanosecondes
 
-- temps de recherche du mot considerations dans l'oeuvre de shakespeare : 79311 nanosecondes
+
+- temps de calcul de la hauteur (intégrale des oeuvres) (patricia) : 7822311 nanosecondes hauteur -> 11
+
+- temps de calcul de la hauteur (intégrale des oeuvres) (trie) 2442243 nanosecondes hauteur -> 39
+
+
+
+
+
+
+
+
+- temps de comptage des mots de l'oeuvre de shakespeare (patricia) : 8575174 nanosecondes
+
+- temps de comptage des mots de l'oeuvre de shakespeare (trie) : 2322886 nanosecondes
+
+
+
+
+- temps de recherche du mot considerations dans l'oeuvre de shakespeare (patricia) : 79311 nanosecondes
+
+- temps de recherche du mot considerations dans l'oeuvre de shakespeare (trie)  29889 nanosecondes
+
 
 -temps de fusion de deux arbres (1henryvi.txt et 1henryiv.txt) : 12529065 nanosecondes
+
+
+
+
+
+profondeur moyenne (trie) 17.0
+
+profondeur moyenne (patricia) 5.59
+
+
+
+
+
+
 
 6-12°/
 

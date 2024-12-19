@@ -88,11 +88,11 @@ public class Patricia {
     }
 
     // permet de rechercher le préfixe associé à la clé dans un noeud patricia
-    public String getPrefixeByKey(String key) {
+    public String getPrefixeByKey(String cle) {
 
         // si la clée est retrouvée on retourne le préfixe associé
-        if (this.noeud.containsKey(key)) {
-            return this.noeud.get(key).getPrefixe();
+        if (this.noeud.containsKey(cle)) {
+            return this.noeud.get(cle).getPrefixe();
         }
         // si la clé n'existe pas on retourne un valeur nulle
         return null;
@@ -104,11 +104,11 @@ public class Patricia {
          * on suppose que le prefixe commun aura pour longueur maximale la longueur du
          * mot le plus court
          */
-        int maxWordLength = prefixe.length() < mot.length() ? prefixe.length() : mot.length();
+        int longeurMax = prefixe.length() < mot.length() ? prefixe.length() : mot.length();
 
         // on initialise le préfixe commun à null
         String commonPrefixe = null;
-        for (int i = 0; i < maxWordLength + 1; i++) {
+        for (int i = 0; i < longeurMax + 1; i++) {
             if (prefixe.substring(0, i).equals(mot.substring(0, i))) {
                 commonPrefixe = mot.substring(0, i);
             } else {
@@ -125,9 +125,6 @@ public class Patricia {
         String debutMot = "";
         debutMot = mot.substring(0, 1);
 
-        /*
-         * on récupère le préfixe associé à la clée
-         */
         String prefixe = patrica.getPrefixeByKey(debutMot);
 
         /*
@@ -136,8 +133,6 @@ public class Patricia {
          * et celui-ci est défini comme une fin de mot
          */
         if (prefixe == null) {
-            // le mot est directement un préfixe et l'élément du noeud est défini comme fin
-            // de mot
             Patricia sousArbrePatricia = new Patricia(mot, "@");
             patrica.getNoeud().put(debutMot, sousArbrePatricia);
             return patrica;
@@ -149,11 +144,11 @@ public class Patricia {
          */
         if (mot.startsWith(prefixe)) {
             Patricia noeudFils = patrica.getNoeud().get(debutMot);
-            // on insère le reste du mot après le préfixe dans le noeud fils
+
             if (mot.length() > prefixe.length()) {
                 Patricia.insertWord(noeudFils, mot.substring(prefixe.length()));
             } else {
-                // si le mot à la même longueur que le mot le définir comme fin de mot
+
                 noeudFils.setFinDeMot("@");
             }
             return patrica;
@@ -164,37 +159,26 @@ public class Patricia {
          * mais le préfixe n'est pas contenu totalement dans le mot
          */
 
-        // on récupère le nouveau préfixe
         String nouveauPrefixe = Patricia.getCommonPrefixe(prefixe, mot);
-        // on crée un nouveau noeud
         Patricia nouveauNoeud = new Patricia(nouveauPrefixe, "");
         Patricia ancienSousArbre = patrica.getNoeud().get(debutMot);
-        // on change le préfixe de l'arbre fils du noeud pour le nouveau préfixe
         ancienSousArbre.setPrefixe(prefixe.substring(nouveauPrefixe.length()));
-        // on insère l'ancien sous arbre au niveau de la nouvelle clé qui est la lettre
-        // qui suit le nouveau préfixe commun
         nouveauNoeud.getNoeud().put(
                 prefixe.substring(nouveauPrefixe.length(), nouveauPrefixe.length() + 1), ancienSousArbre);
-
-        // on ajoute le reste du mot subtitué du nouveau préfixe dans le nouvel arbre
         String resteMot = mot.substring(nouveauPrefixe.length());
         if (!resteMot.isEmpty()) {
             Patricia nouveauSousArbre = new Patricia(resteMot, "@");
             nouveauNoeud.getNoeud().put(resteMot.substring(0, 1), nouveauSousArbre);
         } else {
-            // si le mot est égal au nouveau préfixe on défini le noeud comme une fin de
-            // noeud
             nouveauNoeud.setFinDeMot("@");
         }
 
-        // Remplacer l'ancien nœud par le nouveau dans l'arbre parent
         patrica.getNoeud().put(debutMot, nouveauNoeud);
         return patrica;
     }
 
     // fonction recherchant un mot dans un arbre patricia
     public static boolean recherche(Patricia arbre, String mot) {
-        // si le mot est une chaine de caractère vide on retourne directement faux
         if (mot.isEmpty()) {
             return false;
         }
@@ -210,8 +194,6 @@ public class Patricia {
             String prefixe = arbre.getPrefixeByKey(debut_mot);
             // ici on vérifie si le préfixe est préfixe de notre mot
             if (mot.startsWith(prefixe) && mot.equals(prefixe)) {
-                // si le mot est égal au préfixe alors on s'assure qu'il s'agit d'une fin de mot
-                // si ce n'est pas le cas il s'agit d'un simple prefixe
                 if (arbre.getNoeud().get(debut_mot).isEndOfWord()) {
                     System.out.println(complexRecherche);
                     return true;
@@ -252,9 +234,7 @@ public class Patricia {
         /*
          * si l'arbre n'est pas vide on parcours les noeuds fils
          */
-        // initialisation du nombre de noeuds à 0
         int nbreMots = 0;
-        // on parcours tous les noeuds fils de la racine
         for (Patricia patricia : arbre.getNoeud().values()) {
             /*
              * si on rencontre une fin de noeud on incrémente le nombre
@@ -277,9 +257,6 @@ public class Patricia {
     // fonction permettant de retourner la liste de mots de l'arbre patricia
     public static ArrayList<String> listeMots(Patricia arbre) {
         ArrayList<String> mots = new ArrayList<>();
-        /*
-         * si la racine ne contient pas d'enfant donc il n'y a pas de mots
-         */
         if (arbre.getNoeud().size() == 0) {
             return mots;
         }
@@ -346,7 +323,6 @@ public class Patricia {
             nbreNil += 127 - arbre.getNoeud().size();
         }
 
-        // on parcours les sous noeuds de l'arbres pour compter leurs pointeurs vides
         for (Patricia patricia : arbre.getNoeud().values()) {
             nbreNil += Patricia.comptageNil(patricia);
 
@@ -370,10 +346,7 @@ public class Patricia {
         // par descendre dans les noeuds
         int hauteur = profondeurCourante;
 
-        // ici on visite chaque sous arbre du noeud
         for (Patricia patricia : arbre.getNoeud().values()) {
-            // on continurela visite des sous arbres en incrémentant à chaque fois
-            // qu'on descend d'un niveau
             int profondeurNoeudCourant = Patricia.profondeurNoeud(patricia, profondeurCourante + 1);
             // si on récupère une profondeur d'une feuille on la compare
             // avec la hauteur précédent récupérée le maximun correspond
@@ -398,15 +371,9 @@ public class Patricia {
         if (arbre.getNoeud().size() == 0) {
             complexeProfondeurMoyenne++;
             profondeurs.add(profondeurCourante);
-            // on ajoute la profondeur trouvée à l'ensemble des profondeur et on quitte
             return;
         }
-        // dans le cas contraire on continue par descendre dans les noeuds
-
-        // ici on visite chaque sous arbre du noeud
         for (Patricia patricia : arbre.getNoeud().values()) {
-            // on continue la visite des sous arbres en incrémentant à chaque fois
-            // qu'on descend d'un niveau
             Patricia.profondeurNoeuds(patricia, profondeurCourante + 1, profondeurs);
         }
 
@@ -434,34 +401,22 @@ public class Patricia {
             return 0;
         }
 
-        // si l'arbre n'est pas vide donc on descend dans les enfants
-        // on vérifie si le première lettre de la chaîne contient une valeur
-
         if (arbre.getNoeud().get(prefixe.substring(0, 1)) != null) {
             String prefixeArbre = arbre.getPrefixeByKey(prefixe.substring(0, 1));
 
-            // si la longueur du préfixe de l'arbre courant est
-            // supérieure à la chaine passée en entrée
-            // exemple : prefixeArbre : cat, prefixe (chaîne) : ca
             complexePerfixe++;
             if (prefixeArbre.length() >= prefixe.length() && prefixeArbre.startsWith(prefixe)) {
-                // on crée un arbre vide
+
                 Patricia patricia = new Patricia();
-                // on insère alors l'arbre associé au préfixe comme sous arbre de l'arbre vide
+
                 patricia.getNoeud().put(prefixe.substring(0, 1), arbre.getNoeud().get(prefixe.substring(0, 1)));
                 // compte maintenant le nombre de mots dans l'arbre
                 System.out.println("complexePerfixe : " + complexePerfixe);
                 return Patricia.comptageMots(patricia);
             }
 
-            // si la longueur de la chaîne de caractère passée en entrée est
-            // supérieure à celle du préfixe de l'arbre courant
-            // exemple : prefixeArbre : ca prefixe (chaîne) : cart
             if (prefixeArbre.length() < prefixe.length() && prefixe.startsWith(prefixeArbre)) {
-                // on continue dans le sous arbre du préfixe de l'arbre courant avec
-                // la chaîne soustraite du préfixe
-                // exemple : prefixeArbre : "ca", prefixe (chaîne) : "cart", on continue avec
-                // "rt"
+
                 return Patricia.prefixe(arbre.getNoeud().get(prefixeArbre.substring(0, 1)),
                         prefixe.substring(prefixeArbre.length()));
             }
@@ -475,8 +430,6 @@ public class Patricia {
      */
     public static Patricia supprimer(Patricia arbre, String mot) {
 
-        // si le mot n'existe pas ou le mot est une chaine de caractère vide
-        // on retourne l'arbre
         if (!Patricia.recherche(arbre, mot) || mot.isEmpty()) {
             return arbre;
         }
@@ -484,22 +437,15 @@ public class Patricia {
         String debut_mot = mot.substring(0, 1);
 
         Patricia sousPatricia = arbre.getNoeud().get(debut_mot);
-        // si le mot est directement présent dans le sous arbre de l'arbre courant
-        // on supprime alors le sous arbre
+
         if (mot.equals(arbre.getNoeud().get(debut_mot).getPrefixe()) && arbre.getNoeud().get(debut_mot).isEndOfWord()) {
 
-            // si le mot est trouvé directement
-            // alors on ne le défini plus comme une fin de mot
             sousPatricia.setFinDeMot("");
 
-            // si le mot se situe dans une feuille
-            // on peut supprimer directement le sous arbre
             if (sousPatricia.getNoeud().isEmpty()) {
                 arbre.getNoeud().remove(debut_mot);
             }
 
-            // si le noeud n'est pas vide et ne contient qu'un seul élément
-            // on fait une fusion des préfixes
             if (sousPatricia.getNoeud().size() == 1) {
                 Patricia sousSousArbre = sousPatricia.getNoeud().values().iterator().next();
                 String prefixeFusion = sousPatricia.getPrefixe() + sousSousArbre.getPrefixe();
@@ -510,16 +456,11 @@ public class Patricia {
             return arbre;
         }
 
-        // si le mot n'est pas directement présent dans le sous-arbre de l'arbre courant
-        // alors on descend dans le sous arbre pour continuer la recherche
         complexeSuppresion++;
         if (arbre.getNoeud().containsKey(debut_mot)) {
-            // on réalise une suppression récursive dans le sous-arbre
-            // avec le reste du mot soustrait du préfixe
+
             Patricia.supprimer(sousPatricia, mot.substring(sousPatricia.getPrefixe().length()));
 
-            // si le sous-arbre n'est pas une fin de mot et n'a plus qu'un seul enfant
-            // on fusionne alors le préfixe de l'enfant et du parent
             if (!sousPatricia.isEndOfWord() && sousPatricia.getNoeud().size() == 1) {
                 Patricia sousSousArbre = sousPatricia.getNoeud().values().iterator().next();
                 String prefixeFusion = sousPatricia.getPrefixe() + sousSousArbre.getPrefixe();
@@ -535,20 +476,18 @@ public class Patricia {
     // fonction permettant de fusionner deux arbre patricia
     public static Patricia fusion(Patricia patricia_1, Patricia patricia_2) {
 
-        // si le premier arbre est vide on retourne le second
         if (patricia_1.getNoeud().size() == 0) {
             return patricia_2;
         }
 
-        // si le second arbre est vide on retourne le premier
         if (patricia_2.getNoeud().size() == 0) {
             return patricia_1;
         }
 
         // on parcourt toute les clées du deuxième arbre
         for (String cle : patricia_2.getNoeud().keySet()) {
+
             // si la clée n'est pas présente dans l'arbre 1
-            // on rajoute la clée dans l'arbre ainsi que le sous arbre associé
             if (!patricia_1.getNoeud().containsKey(cle)) {
                 patricia_1.getNoeud().put(cle, patricia_2.getNoeud().get(cle));
             }
@@ -560,7 +499,6 @@ public class Patricia {
                 String prefixeArbre2 = patricia_2.getNoeud().get(cle).getPrefixe();
 
                 // si les deux on le même préfixe
-                // on continue la fusion récursivement dans les sous arbres associés a la clé
                 if (prefixeArbre1.equals(prefixeArbre2)) {
                     patricia_1.getNoeud().put(cle,
                             Patricia.fusion(patricia_1.getNoeud().get(cle),
@@ -589,12 +527,6 @@ public class Patricia {
                 }
             }
         }
-
-        // ArrayList<String> listeMotsArbre2 = Patricia.listeMots(patricia_2);
-
-        // for (String mot : listeMotsArbre2) {
-        // Patricia.insertWord(patricia_1, mot);
-        // }
 
         return patricia_1;
     }

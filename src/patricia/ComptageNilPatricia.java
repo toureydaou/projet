@@ -30,7 +30,7 @@ public class ComptageNilPatricia {
 
             BufferedWriter writer = new BufferedWriter(new FileWriter(fichierHauteur));
 
-            writer.write(nombreNil + "\n");
+            writer.write(nombreNil + "");
 
             writer.close();
 

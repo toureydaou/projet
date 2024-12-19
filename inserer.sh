@@ -15,4 +15,10 @@ y=$2
 if [ "$x" -eq 0 ]; then
     echo "Insertion dans l'arbre patricia";
     java -classpath classes:lib/gson-2.11.0.jar Main inserer "$y"
+elif [ "$x" -eq 1 ]; then
+    echo "Insertion dans le trie hybride";
+    java -classpath classes:lib/gson-2.11.0.jar:lib/json-20211205.jar MainTrie inserer "$y"
+else
+    echo " Error : x doit étre 0 ou 1"
+    exit 1
 fi

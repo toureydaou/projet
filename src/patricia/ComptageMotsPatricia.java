@@ -33,7 +33,7 @@ public class ComptageMotsPatricia {
 
             BufferedWriter writer = new BufferedWriter(new FileWriter(fichierNombreMots));
 
-            writer.write(nombreMots + "\n");
+            writer.write(nombreMots + "");
 
             writer.close();
 

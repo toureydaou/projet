@@ -36,7 +36,7 @@ public class RechercheMotPatricia {
 
             // écriture dans le ficher
             BufferedWriter writer = new BufferedWriter(new FileWriter(fichierMots));
-            writer.write(trouve + "\n");
+            writer.write(trouve + "");
             writer.close();
             System.out.println(mot + " est présent dans l'arbre "
                     + file + " : " + trouve);

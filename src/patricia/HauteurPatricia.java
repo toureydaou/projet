@@ -31,7 +31,7 @@ public class HauteurPatricia {
 
             BufferedWriter writer = new BufferedWriter(new FileWriter(fichierHauteur));
 
-            writer.write(hauteur + "\n");
+            writer.write(hauteur + "");
 
             writer.close();
 
